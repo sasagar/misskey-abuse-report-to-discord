@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv'
 import fs from 'fs';
 import axios from 'axios';
 import cron from 'node-cron';
+import { format } from 'date-fns';
+import { ja } from 'date-fns/locale/index.js';
 
 dotenv.config();
 const { MISSKEY_URL, TOKEN, DISCORD_WEBHOOK } = process.env;
@@ -77,7 +79,7 @@ const checkAbuse = async () => {
                                 },
                                 {
                                     name: "通報日時",
-                                    value: res[i].createdAt
+                                    value: format(new Date(res[i].createdAt), 'PPPPpppp', { locale: ja })
                                 }
                             ],
                             thumbnail: {

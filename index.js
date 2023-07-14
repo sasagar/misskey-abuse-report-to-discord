@@ -41,13 +41,16 @@ const checkAbuse = async () => {
         .then(async arr => {
             const len = arr.length;
 
+            // 0件ならスルー
             if (len === 0) { return; }
 
             let res = arr;
-            // 最新を0番目に。
-            res.sort((a, b) => b.createdAt - a.createdAt);
+            if (len >= 2) {
+                // 最新を0番目に。
+                res.sort((a, b) => a.createdAt - b.createdAt);
+            }
 
-            for (let i = len - 1; i--; i < 0) {
+            for (let i = 0; i < len; i++) {
                 const message = {
                     username: "Ikaskey Abuse Tracker",
                     content: "新しい通報を確認しました",
@@ -95,7 +98,7 @@ const checkAbuse = async () => {
 
                 await axios.post(DISCORD_WEBHOOK, message).catch(e => console.log(e));
             }
-            fs.writeFileSync(filename, res[0].id);
+            fs.writeFileSync(filename, res[len - 1].id);
         })
         .catch(e => { console.error(e) });
 }

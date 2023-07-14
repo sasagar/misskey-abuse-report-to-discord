@@ -35,6 +35,7 @@ const checkAbuse = async () => {
         if (lastId != '') {
             args.sinceId = lastId;
         }
+        console.log(args);
     }
 
     await cli.request('admin/abuse-user-reports', args)
@@ -102,3 +103,5 @@ const checkAbuse = async () => {
         })
         .catch(e => { console.error(e) });
 }
+
+checkAbuse();

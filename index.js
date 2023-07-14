@@ -30,12 +30,11 @@ cron.schedule('* * * * *', () => {
 const checkAbuse = async () => {
     const args = {}
     if (fs.existsSync(filename)) {
-        const lastId = fs.readFileSync(filename).toString();
+        const lastId = fs.readFileSync(filename).toString().replace(/\r?\n/g, '');
         console.log(lastId);
         if (lastId != '') {
             args.sinceId = lastId;
         }
-        console.log(args);
     }
 
     await cli.request('admin/abuse-user-reports', args)

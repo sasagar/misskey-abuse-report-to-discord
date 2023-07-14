@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  main:
+    build: .
+    volumes:
+      - type: bind
+        source: "./lastid.txt"
+        target: "/usr/src/app/lastid.txt"

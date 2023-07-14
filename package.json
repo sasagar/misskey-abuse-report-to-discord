@@ -1,0 +1,19 @@
+{
+  "name": "misskey-abuse-report-to-discord",
+  "version": "1.0.0",
+  "description": "Send message to Discord when the abuse reported.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "@sasagar",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "misskey-js": "^0.0.15",
+    "node-cron": "^3.0.2"
+  }
+}

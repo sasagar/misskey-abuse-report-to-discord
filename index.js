@@ -46,7 +46,7 @@ const checkAbuse = async () => {
 
             let res = arr;
             if (len >= 2) {
-                // 最新を0番目に。
+                // 最新を最後に。
                 res.sort((a, b) => a.createdAt - b.createdAt);
             }
 

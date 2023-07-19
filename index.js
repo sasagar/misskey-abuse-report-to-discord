@@ -3,8 +3,9 @@ import * as dotenv from 'dotenv'
 import fs from 'fs';
 import axios from 'axios';
 import cron from 'node-cron';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
 import { ja } from 'date-fns/locale/index.js';
+import { utcToZonedTime, format as formatTZ } from 'date-fns-tz';
 
 dotenv.config();
 const { MISSKEY_URL, TOKEN, DISCORD_WEBHOOK } = process.env;
@@ -51,6 +52,14 @@ const checkAbuse = async () => {
             }
 
             for (let i = 0; i < len; i++) {
+                // Timezone collection
+                const utcDate = new Date(res[i].createdAt);
+                //=> 2000-01-01T00:00:00.000Z
+                const jstDate = utcToZonedTime(utcDate, 'Asia/Tokyo');
+                //=> 2000-01-01T09:00:00.000Z
+                const jstString = formatTZ(jstDate, 'PPP(EEE) HH:mm:ss (xxx)', { locale: ja, timeZone: 'Asia/Tokyo' });
+                //=> "2000-01-01 09:00:00"
+
                 const message = {
                     username: "Ikaskey Abuse Tracker",
                     content: "新しい通報を確認しました",
@@ -82,7 +91,11 @@ const checkAbuse = async () => {
                                 },
                                 {
                                     name: "通報日時",
-                                    value: format(new Date(res[i].createdAt), 'PPPPpppp', { locale: ja })
+                                    value: jstString,
+                                },
+                                {
+                                    name: "通報id",
+                                    value: res[i].id,
                                 }
                             ],
                             thumbnail: {

@@ -108,7 +108,7 @@ const checkAbuse = async () => {
                         }
                     ]
                 };
-
+                console.log(message);
                 await axios.post(DISCORD_WEBHOOK, message).catch(e => console.log(e));
             }
             fs.writeFileSync(filename, res[len - 1].id);

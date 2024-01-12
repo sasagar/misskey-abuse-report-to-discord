@@ -29,11 +29,12 @@ cron.schedule('* * * * *', () => {
 });
 
 const checkAbuse = async () => {
+    console.log("checkAbuse running...")
     const args = {}
     if (fs.existsSync(filename)) {
         const lastId = fs.readFileSync(filename).toString().replace(/\r?\n/g, '');
         console.log(lastId);
-        if (lastId != '') {
+        if (lastId !== '') {
             args.sinceId = lastId;
         }
     }
@@ -45,7 +46,7 @@ const checkAbuse = async () => {
             // 0件ならスルー
             if (len === 0) { return; }
 
-            let res = arr;
+            const res = arr;
             if (len >= 2) {
                 // 最新を最後に。
                 res.sort((a, b) => a.createdAt - b.createdAt);
@@ -67,14 +68,14 @@ const checkAbuse = async () => {
                         {
                             author: {
                                 name: res[i].reporter.name,
-                                url: MISSKEY_URL + '/@' + res[i].reporter.username,
+                                url: `${MISSKEY_URL}/@${res[i].reporter.username}`,
                                 icon_url: res[i].reporter.avatarUrl
                             },
                             title: "通報内容",
                             url: "https://ikaskey.bktsk.com/admin/abuses",
                             description: "以下の内容で通報がありました。",
                             color: 15925132,
-                            "fields": [
+                            fields: [
                                 {
                                     name: "対象ユーザー名",
                                     value: res[i].targetUser.name,
@@ -82,7 +83,7 @@ const checkAbuse = async () => {
                                 },
                                 {
                                     name: "対象ユーザーID",
-                                    value: "[@" + res[i].targetUser.username + "](" + MISSKEY_URL + "/@" + res[i].targetUser.username + ")",
+                                    value: `[@${res[i].targetUser.username}](${MISSKEY_URL}/@${res[i].targetUser.username})`,
                                     inline: true
                                 },
                                 {

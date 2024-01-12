@@ -1,6 +1,6 @@
 {
   "name": "misskey-abuse-report-to-discord",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Send message to Discord when the abuse reported.",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "author": "@sasagar",
   "license": "GPL-3.0",
   "dependencies": {
+    "@biomejs/biome": "^1.5.1",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
